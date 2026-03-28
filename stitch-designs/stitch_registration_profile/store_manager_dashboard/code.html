@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Store Management Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed-variant": "#003bae",
+              "surface-variant": "#d3e5f1",
+              "primary-fixed-dim": "#b5c4ff",
+              "on-secondary-fixed-variant": "#661aa3",
+              "secondary-fixed": "#f1dbff",
+              "primary-container": "#0a46c4",
+              "on-tertiary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "surface-container-high": "#d9ebf7",
+              "surface-dim": "#cbdde8",
+              "tertiary-fixed": "#d0e4ff",
+              "on-tertiary-container": "#acc8ea",
+              "on-error": "#ffffff",
+              "surface-bright": "#f4faff",
+              "on-secondary-fixed": "#2d0050",
+              "surface": "#f4faff",
+              "on-primary-fixed": "#00164e",
+              "tertiary-container": "#395471",
+              "inverse-primary": "#b5c4ff",
+              "tertiary": "#213d59",
+              "outline-variant": "#c4c5d6",
+              "outline": "#747685",
+              "on-primary": "#ffffff",
+              "tertiary-fixed-dim": "#adc9eb",
+              "error": "#ba1a1a",
+              "on-primary-container": "#b4c3ff",
+              "error-container": "#ffdad6",
+              "background": "#f4faff",
+              "on-secondary-container": "#4e0084",
+              "on-background": "#0c1e26",
+              "surface-tint": "#2454d1",
+              "on-error-container": "#93000a",
+              "surface-container-low": "#e8f6ff",
+              "surface-container-highest": "#d3e5f1",
+              "inverse-surface": "#22333c",
+              "secondary-fixed-dim": "#dfb7ff",
+              "surface-container": "#def0fc",
+              "on-tertiary-fixed-variant": "#2d4965",
+              "on-surface": "#0c1e26",
+              "primary": "#003194",
+              "secondary": "#803abd",
+              "on-tertiary-fixed": "#001d35",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#434654",
+              "inverse-on-surface": "#e2f3ff",
+              "secondary-container": "#c17bff",
+              "primary-fixed": "#dce1ff"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#f4faff] dark:bg-slate-900 shadow-none">
+<div class="flex items-center px-6 h-16 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="text-[#003194] dark:text-blue-400 active:scale-95 duration-200">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] text-lg font-semibold tracking-tight text-[#003194] dark:text-blue-400">Store Management</h1>
+</div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex ml-auto items-center gap-8">
+<a class="text-[#003194] font-bold transition-colors" href="#">Inventory</a>
+<a class="text-[#0c1e26] opacity-70 hover:bg-[#d3e5f1] px-3 py-1 rounded-lg transition-colors" href="#">Analytics</a>
+<a class="text-[#0c1e26] opacity-70 hover:bg-[#d3e5f1] px-3 py-1 rounded-lg transition-colors" href="#">Settings</a>
+</nav>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-8 md:py-12">
+<!-- Header & Action Row -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="space-y-2">
+<h2 class="font-headline text-4xl md:text-5xl font-extrabold tracking-tight text-on-surface">Manage Inventory</h2>
+<p class="text-on-surface-variant text-lg max-w-md">Curate the items your members see in their daily memory exercises.</p>
+</div>
+<button class="btn-gradient text-on-primary h-[64px] px-8 rounded-xl font-semibold flex items-center justify-center gap-3 shadow-lg active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Add New Item</span>
+</button>
+</div>
+<!-- Quick Stats (Asymmetric Layout) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
+<div class="md:col-span-4 bg-surface-container-low p-8 rounded-[2rem] flex flex-col justify-between min-h-[200px]">
+<span class="text-on-surface-variant font-medium tracking-wide">Total Items</span>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-bold font-headline text-primary">124</span>
+<span class="text-primary/60 font-medium">+12%</span>
+</div>
+</div>
+<div class="md:col-span-3 bg-surface-container-highest p-8 rounded-[2rem] flex flex-col justify-between min-h-[200px]">
+<span class="text-on-surface-variant font-medium tracking-wide">Active Categories</span>
+<span class="text-5xl font-bold font-headline text-on-surface">12</span>
+</div>
+<div class="md:col-span-5 bg-tertiary-fixed p-8 rounded-[2rem] flex flex-col justify-between min-h-[200px] relative overflow-hidden">
+<div class="relative z-10">
+<span class="text-on-tertiary-fixed-variant font-medium tracking-wide">Most Selected Item</span>
+<h3 class="text-3xl font-bold font-headline text-on-tertiary-fixed mt-4">Organic Honey</h3>
+<p class="text-on-tertiary-fixed-variant/70 mt-1">Appears in 85% of sessions</p>
+</div>
+<div class="absolute right-[-20px] bottom-[-20px] opacity-10">
+<span class="material-symbols-outlined !text-[120px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</section>
+<!-- Inventory List Section -->
+<section class="space-y-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="relative flex-grow max-w-xl">
+<span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-full h-14 pl-14 pr-6 text-on-surface placeholder:text-on-surface-variant focus:ring-2 focus:ring-primary-fixed-dim transition-all" placeholder="Search inventory items..." type="text"/>
+</div>
+<div class="flex gap-3 overflow-x-auto pb-2 md:pb-0">
+<span class="px-6 py-2 bg-secondary text-on-secondary rounded-full font-medium whitespace-nowrap cursor-pointer">All Items</span>
+<span class="px-6 py-2 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full font-medium whitespace-nowrap cursor-pointer hover:bg-secondary-fixed-dim transition-colors">Dairy</span>
+<span class="px-6 py-2 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full font-medium whitespace-nowrap cursor-pointer hover:bg-secondary-fixed-dim transition-colors">Produce</span>
+<span class="px-6 py-2 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full font-medium whitespace-nowrap cursor-pointer hover:bg-secondary-fixed-dim transition-colors">Bakery</span>
+</div>
+</div>
+<!-- List of Items (Using Tonal Layering, No Borders) -->
+<div class="space-y-4">
+<!-- Item Card 1 -->
+<div class="group bg-surface-container-lowest p-6 rounded-[1.5rem] flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-20 h-20 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="close-up of fresh red apples in a wooden crate with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6bEB63UWkMj8jJYraJ0nxVXgrJ8ZLviK_3xNoTe6q-V3ma9BAXf37xqIBCyALZa6qgFGMzVUKwvJbrVY5jhEFi5qy7LIJnmqdJ-PHu97eg9raJfcLGBWvO5zZpzmVZvpuvLbsQEXl_wOaL5Yqt_fwij1vDzHQeZaX6vZuSz0aYrV2I5HzKUJn0uoNYE3rTINkkMFWmtQp20nmWmtQsrm12PQzHVcxTCN3F_MoklZ1_T651oDPEmZj6xvyp5HiKrFglCUJ8jve_IPe"/>
+</div>
+<div class="flex-grow">
+<h4 class="text-xl font-bold font-headline text-on-surface">Red Gala Apples</h4>
+<p class="text-on-surface-variant">Produce • Added 2 days ago</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex flex-col items-end mr-8">
+<span class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Visibility</span>
+<span class="text-primary font-bold">Public</span>
+</div>
+<button class="bg-surface-container-highest text-primary font-bold px-6 py-3 rounded-xl hover:bg-primary hover:text-on-primary transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                            Edit
+                        </button>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="group bg-surface-container-lowest p-6 rounded-[1.5rem] flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-20 h-20 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="bottle of fresh organic milk on a light blue background with gentle shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCxtICV5ewH6qbBKa4dy9eMee3oNUTbAihUMDinp8oiQTBe44uq75Me1RfmUFINb_wnW4k7IUACXu7oxFnu00hKTdBLzUknnnjdc5QFH_DQvLwXZvuiahPmwElsNDSH9AO2ksifgtqgZdAGAYvlaTWmEanjgEYXAnco-g3p1dqmFxfEzF1shrxKvpcO5rSYJVnCcqevfKhepZ767xoxvWu8Wrl7SZFy-CHUInQh4gFA5j09KawJEZldc9LIJlhhYoX0-RbMS8BzXtb"/>
+</div>
+<div class="flex-grow">
+<h4 class="text-xl font-bold font-headline text-on-surface">Whole Organic Milk</h4>
+<p class="text-on-surface-variant">Dairy • Added 1 week ago</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex flex-col items-end mr-8">
+<span class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Visibility</span>
+<span class="text-primary font-bold">Public</span>
+</div>
+<button class="bg-surface-container-highest text-primary font-bold px-6 py-3 rounded-xl hover:bg-primary hover:text-on-primary transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                            Edit
+                        </button>
+</div>
+</div>
+<!-- Item Card 3 -->
+<div class="group bg-surface-container-lowest p-6 rounded-[1.5rem] flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-20 h-20 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="artisan rustic bread loaf on a linen cloth with warm morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2nJ3uE7vfCK9jxcim5shVBRrjFHCaAv1cGZSlRIzi3ml1ShAEV2K98XgoEbQfV3uJ1Xho6XdPtwfmpFdbvXq6VqIzwg99ODGetwFFyS268RDhZrAKKhjN5LEGAaorNNrqOCI8I34euxZZrwWvV6Efgs9YWn43Fx4Nl4sc7FaGmAN6Cic7XltYn3FeVsv3k7jMiExmgBtBu9KjcG6WuKeSohlYHmOx85S6jnZ0StKhzK5--Zlik6vg-odOLJMhB2UT4DjMDTeM7o62"/>
+</div>
+<div class="flex-grow">
+<h4 class="text-xl font-bold font-headline text-on-surface">Sourdough Loaf</h4>
+<p class="text-on-surface-variant">Bakery • Added 2 weeks ago</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex flex-col items-end mr-8">
+<span class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Visibility</span>
+<span class="text-on-surface-variant font-bold">Draft</span>
+</div>
+<button class="bg-surface-container-highest text-primary font-bold px-6 py-3 rounded-xl hover:bg-primary hover:text-on-primary transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                            Edit
+                        </button>
+</div>
+</div>
+<!-- Item Card 4 -->
+<div class="group bg-surface-container-lowest p-6 rounded-[1.5rem] flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-20 h-20 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="close-up of uncooked fusilli pasta in a bright minimalist kitchen setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL8gb58T_sLZSUxOaZvVm51ohYc1G9aJOUovrO4jK9CPBXHgYeO1gFdfMxmcKB7BIJfn4F7-U94GfogWuZJHrpteGr_lYKfcLPNGMap85kbzApeJqHeG8_Q1TX27q0NTxapVnA7VOsa2YPjuyvl7oMAQ0ynRMD-p8h2JJ929TevD3j78zhiAOGW9sO5G1jXwKBvVcXeeZO9ilo2Ow-qk7Uvi05_8oCFqpPiqufNS1PttK98a1Ogxu6J0GS_PeSioLxBcrt04UA4fKM"/>
+</div>
+<div class="flex-grow">
+<h4 class="text-xl font-bold font-headline text-on-surface">Fusilli Pasta</h4>
+<p class="text-on-surface-variant">Pantry • Added 3 days ago</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex flex-col items-end mr-8">
+<span class="text-sm font-medium text-on-surface-variant uppercase tracking-widest">Visibility</span>
+<span class="text-primary font-bold">Public</span>
+</div>
+<button class="bg-surface-container-highest text-primary font-bold px-6 py-3 rounded-xl hover:bg-primary hover:text-on-primary transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                            Edit
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden glass-nav bg-[#f4faff]/80 dark:bg-slate-900/80 fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-6 z-50 rounded-t-[24px] border-t border-[#0c1e26]/5 shadow-[0_-10px_30px_rgba(12,30,38,0.04)]">
+<a class="flex flex-col items-center justify-center text-[#003194] dark:text-blue-300 font-bold bg-[#d3e5f1] dark:bg-blue-900/40 rounded-2xl px-5 py-1.5 transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-['Inter'] text-[12px] font-medium tracking-wide">Inventory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0c1e26] dark:text-slate-400 opacity-60 hover:opacity-100 transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Inter'] text-[12px] font-medium tracking-wide">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#0c1e26] dark:text-slate-400 opacity-60 hover:opacity-100 transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-[12px] font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+<!-- Desktop FAB (Floating Action Button) -->
+<button class="hidden md:flex fixed right-8 bottom-8 w-16 h-16 bg-primary text-on-primary rounded-full items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined !text-3xl">add</span>
+</button>
+</body></html>

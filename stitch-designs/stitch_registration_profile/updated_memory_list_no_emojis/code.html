@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Memory Phase - Remind</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#def0fc",
+              "primary-container": "#0a46c4",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "primary": "#003194",
+              "secondary-fixed-dim": "#dfb7ff",
+              "primary-fixed": "#dce1ff",
+              "outline-variant": "#c4c5d6",
+              "surface-container-low": "#e8f6ff",
+              "primary-fixed-dim": "#b5c4ff",
+              "surface-container-high": "#d9ebf7",
+              "on-tertiary-fixed": "#001d35",
+              "on-primary": "#ffffff",
+              "on-secondary-fixed": "#2d0050",
+              "on-secondary-fixed-variant": "#661aa3",
+              "surface-bright": "#f4faff",
+              "inverse-primary": "#b5c4ff",
+              "outline": "#747685",
+              "on-secondary-container": "#4e0084",
+              "on-primary-fixed-variant": "#003bae",
+              "surface": "#f4faff",
+              "surface-tint": "#2454d1",
+              "error-container": "#ffdad6",
+              "surface-dim": "#cbdde8",
+              "on-error": "#ffffff",
+              "on-surface": "#0c1e26",
+              "surface-variant": "#d3e5f1",
+              "secondary-fixed": "#f1dbff",
+              "secondary": "#803abd",
+              "inverse-surface": "#22333c",
+              "on-background": "#0c1e26",
+              "tertiary-fixed": "#d0e4ff",
+              "secondary-container": "#c17bff",
+              "inverse-on-surface": "#e2f3ff",
+              "on-secondary": "#ffffff",
+              "on-primary-container": "#b4c3ff",
+              "surface-container-highest": "#d3e5f1",
+              "tertiary-fixed-dim": "#adc9eb",
+              "tertiary": "#213d59",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#00164e",
+              "on-tertiary-fixed-variant": "#2d4965",
+              "tertiary-container": "#395471",
+              "on-tertiary-container": "#acc8ea",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#434654",
+              "background": "#f4faff"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar (Execution of Shared Component JSON) -->
+<header class="fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16 bg-[#f4faff]/80 dark:bg-[#0c1e26]/80 backdrop-blur-xl z-50 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#003194] dark:text-[#d3e5f1]">menu</span>
+</button>
+<h1 class="font-headline font-bold text-xl tracking-tight text-[#003194] dark:text-[#d3e5f1]">Memory Phase</h1>
+</div>
+<div class="flex items-center">
+<button class="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#003194] dark:text-[#d3e5f1]">help</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="flex-grow pt-24 pb-32 px-6 max-w-2xl mx-auto w-full">
+<!-- Instruction Section -->
+<section class="mb-12 text-center">
+<h2 class="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-3">
+                Take a moment to remember these items.
+            </h2>
+<div class="w-16 h-1.5 bg-secondary-fixed rounded-full mx-auto"></div>
+</section>
+<!-- Memory Items Grid (Asymmetric Editorial Layout) -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+<!-- Item 1: Large Focus -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0px_20px_40px_rgba(12,30,38,0.04)] flex flex-col items-center transition-transform hover:scale-[1.02]">
+<div class="w-full aspect-square rounded-[1.5rem] bg-surface-container-low mb-6 overflow-hidden">
+<img alt="A fresh red apple" class="w-full h-full object-cover" data-alt="A single fresh red apple with leaf" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlKrNEU0gPtpx3dql7BhYjfEwtSQfE3t0kpbtz8m6DnaB-wtIvugcYUY8GnpwruqYLEn-bmC8ls-mSxk70zdMdCjRWFUJxtzJ4k5Upww4_zOiHnZshIq2-OKOkfLIiqBCr6xdGCDnlKOqYNR10-Q5lKIKYwiIpx0ZEa6wk3NGoaBDxJZLhgEpK7VV0Y-mXsNUPqYJ36fv2P_pGRwPsVjQ0Av5V0bUD7n9QU2aKdVENiU4179Tjene1zp_Ee08w1PwNnwdlYuZVI6yG"/>
+</div>
+<span class="font-headline text-2xl font-bold tracking-tight text-primary">Apple</span>
+</div>
+<div class="grid gap-8 pt-0 md:pt-12">
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0px_20px_40px_rgba(12,30,38,0.04)] flex flex-col items-center transition-transform hover:scale-[1.02]">
+<div class="w-full aspect-[4/3] rounded-[1.5rem] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="A glass bottle of milk" class="w-full h-full object-cover" data-alt="A glass bottle of cold white milk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl03RIm4h0siOHuGBAAlbXTS1zclBqPXlRLAGmcj1wawqxbwpTIA6Rn6ExmOJj37MBbD72C0RH3JEuutQvRi3DJRHyL8TD8zltkYaSxXr0BPjnjtNWaH61LYOkAykQk3RGcKjJCW6dxbVeerLNhgy0pvum9JncXS2Q9I-ztwCRbKFJXTNFi4ZousiMxBVkZKKNmConvPVXWfzE5qoyxF5euuesmyorYuA6bmvgcXvqea6ovmWrkhGJ7L2onrlxTzEz__AKjs7dH6vU"/>
+</div>
+<span class="font-headline text-xl font-bold tracking-tight text-primary">Milk</span>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0px_20px_40_rgba(12,30,38,0.04)] flex flex-col items-center transition-transform hover:scale-[1.02]">
+<div class="w-full aspect-[4/3] rounded-[1.5rem] bg-surface-container-low mb-4 overflow-hidden">
+<img alt="A loaf of crusty bread" class="w-full h-full object-cover" data-alt="A loaf of crusty sourdough bread" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlob0V4uO6jidm2VRfJJ8xjw1cXB9IsE4u4TSi_a7aLOGVwbkBCfnRRL140NOJhTqm_7DL65FvZVXbkWDqT-eb4naB_MwZvs4bGd89toYdio8EYEtmMjulnOSiA83vEph1C2HkSTLbRzvUNm47yPqZzYUKo_kBEjpkqWs25owpe221KbEnGcb2mHpwGt7fk5DULZu2C3pleps2mfRCfHDn4cQL2XCoF6acZ9J-kMxCwG0CSrv9ZkX1K0Vx-Hr_DWzxDJ915RYFSlPl"/>
+</div>
+<span class="font-headline text-xl font-bold tracking-tight text-primary">Bread</span>
+</div>
+</div>
+<!-- Item 4 (Centered Span) -->
+<div class="md:col-span-2 mt-4">
+<div class="bg-surface-container-high rounded-[2.5rem] p-6 sm:p-8 flex items-center justify-between shadow-[0px_20px_40px_rgba(12,30,38,0.04)] transition-transform hover:scale-[1.01]">
+<div class="flex items-center gap-6 sm:gap-8">
+<div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-surface-container-lowest p-1 shadow-sm overflow-hidden flex-shrink-0">
+<img alt="Bunches of yellow bananas" class="w-full h-full object-cover rounded-full" data-alt="A bunch of ripe yellow bananas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPs9xXohElovCqqytf-VC4Lhy8kkrFJ9dS5KaI19AVRNu1W_IMFuATHyLrTd4h5Q72ZDxrGMrNB9icnzmJtJ49KXBsiM-eUTPKiYg7lxfYVMwqd1mcEhM-6TWMLv31wvMR7r2JV0GWGybvMoDRAX1-05ZZJ8oA4EB_pOYd5dgeQdQoSkxBKKHeWmvP-JY2viXD6JmiKwrWL00cRQ2BY9501R6ywAHRXk9ObyLkrfYLt8NXCBQPzL-r27gh1oiBjW0gcGXtElwRN7SG"/>
+</div>
+<div>
+<span class="font-headline text-2xl font-bold tracking-tight text-primary block">Bananas</span>
+<p class="text-on-surface-variant font-medium">A healthy snack</p>
+</div>
+</div>
+<div class="hidden sm:block">
+<span class="material-symbols-outlined text-4xl text-primary/20" style="font-variation-settings: 'FILL' 1;">shopping_basket</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Action Area (Subtle Tonal Background Shift) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-low/95 backdrop-blur-xl px-6 pt-6 pb-10 flex justify-center items-center z-40">
+<button class="primary-gradient text-on-primary w-full max-w-md h-16 rounded-[1.5rem] font-headline font-bold text-lg shadow-lg active:scale-95 transition-all duration-200 flex items-center justify-center gap-3 group">
+<span>I'm Ready</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+</div>
+<!-- Navigation suppressed per "Destination Rule" to focus on task -->
+</body></html>

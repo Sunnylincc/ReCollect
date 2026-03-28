@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Remind - Shopping Phase</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#def0fc",
+                        "primary-container": "#0a46c4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary": "#003194",
+                        "secondary-fixed-dim": "#dfb7ff",
+                        "primary-fixed": "#dce1ff",
+                        "outline-variant": "#c4c5d6",
+                        "surface-container-low": "#e8f6ff",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "surface-container-high": "#d9ebf7",
+                        "on-tertiary-fixed": "#001d35",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#2d0050",
+                        "on-secondary-fixed-variant": "#661aa3",
+                        "surface-bright": "#f4faff",
+                        "inverse-primary": "#b5c4ff",
+                        "outline": "#747685",
+                        "on-secondary-container": "#4e0084",
+                        "on-primary-fixed-variant": "#003bae",
+                        "surface": "#f4faff",
+                        "surface-tint": "#2454d1",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#cbdde8",
+                        "on-error": "#ffffff",
+                        "on-surface": "#0c1e26",
+                        "surface-variant": "#d3e5f1",
+                        "secondary-fixed": "#f1dbff",
+                        "secondary": "#803abd",
+                        "inverse-surface": "#22333c",
+                        "on-background": "#0c1e26",
+                        "tertiary-fixed": "#d0e4ff",
+                        "secondary-container": "#c17bff",
+                        "inverse-on-surface": "#e2f3ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#b4c3ff",
+                        "surface-container-highest": "#d3e5f1",
+                        "tertiary-fixed-dim": "#adc9eb",
+                        "tertiary": "#213d59",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-tertiary-fixed-variant": "#2d4965",
+                        "tertiary-container": "#395471",
+                        "on-tertiary-container": "#acc8ea",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#434654",
+                        "background": "#f4faff"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+        }
+        .glass-panel {
+            background: rgba(244, 250, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        #hint-modal {
+            display: none;
+        }
+        #hint-modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16 bg-[#f4faff]/80 backdrop-blur-xl z-50 shadow-sm">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined text-[#003194]" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline font-bold text-xl tracking-tight text-[#003194]">Pick Your Items</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1 bg-surface-container-high px-4 py-1.5 rounded-full text-primary font-bold active:scale-95 transition-all shadow-sm" onclick="toggleHint()">
+<span class="material-symbols-outlined text-xl" data-icon="lightbulb">lightbulb</span>
+<span class="text-sm">Hint</span>
+</button>
+<button class="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+<span class="material-symbols-outlined text-[#003194]" data-icon="help">help</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-40 px-6 max-w-4xl mx-auto">
+<!-- Progress Section -->
+<section class="mb-12 flex flex-col md:flex-row justify-between items-baseline gap-4">
+<div class="max-w-md">
+<h2 class="font-headline text-4xl font-extrabold tracking-tight text-primary mb-2">Find your groceries.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed">Refer to your list and select the items you need to complete today's task.</p>
+</div>
+<div class="bg-surface-container-high px-8 py-6 rounded-[2rem] flex flex-col items-center justify-center min-w-[160px] shadow-sm">
+<span class="text-label-md font-bold text-primary uppercase tracking-widest mb-1">Items Found</span>
+<div class="flex items-baseline gap-1">
+<span class="text-5xl font-headline font-black text-primary">1</span>
+<span class="text-2xl font-headline font-bold text-outline">/4</span>
+</div>
+</div>
+</section>
+<!-- Shopping Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+<!-- Item: Milk (Collected State) -->
+<div class="group relative bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_20px_40px_rgba(12,30,38,0.06)] ring-4 ring-primary ring-offset-4 ring-offset-surface transition-all">
+<div class="absolute top-4 right-4 bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-sm" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2">
+<img alt="Milk" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIEjqfCeCCYvns2fj6pPkoO3wjBZFAyL0dKt_Nc16ERzGa9Hy9cH6-NZ47iVr1Zg4Z601P8SwEGOfFPNx05ADba8KkNIdqt15sH9GljBmog2pWjhbqIJF6W4QNNdpbIoyPSINI67ozHXa-owpFAlB157vVLnPDL0Uj091fxrplwj4Ef8HTEthPmRDr6nBEYHKmBogN5VN01QGxoW5WDPKwNoIBlwqYgh1tdB-cikBeHspyB7s0hrokAK_h7Xlfy_WdQjsWJ3kXTlZC"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Milk</span>
+</div>
+<!-- Item: Apples -->
+<button class="group bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_10px_20px_rgba(12,30,38,0.03)] hover:shadow-[0px_20px_40px_rgba(12,30,38,0.06)] transition-all active:scale-95">
+<div class="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 group-hover:bg-primary-fixed transition-colors">
+<img alt="Apples" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaQfUdsDdvUA0NiWSOaCkyFF6GBMl_RlV0-dO-4dlS55P0nOBv2W9BtRZQL2ae-2UZ_bvxfrxjAbkuXJ9ToFXXqxUVVpn9eAOysG5EWQkOeTM-XxuOQ63SPtkf-xe4v9BCtUzKyfoIsiDtFAymEEUpDi0zzqjzleBMMvVSTtbe5kV_KdVPw-7_aeY9gsqopuID4Sp5zc72O_eLYGSK0NshaeQX9Vt051oF-4wz9TEiAW8plxPF6xPyRWrCYG4LjF_IqLDriSh9D3rx"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Apples</span>
+</button>
+<!-- Item: Bread -->
+<button class="group bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_10px_20px_rgba(12,30,38,0.03)] hover:shadow-[0px_20px_40px_rgba(12,30,38,0.06)] transition-all active:scale-95">
+<div class="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 group-hover:bg-primary-fixed transition-colors">
+<img alt="Bread" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaKyZCpj3rQN1nTtFQdUWbnn-ggm8DydCT-3ihjfQX0XwGl6bzDnNZLyq5ksjcHoPJ9a3N94ACks7qDcnbZ4u4mmLtGW0Ew4jPYJV35Iau4ArO9Em2xFciUDMVo4RZ_wWEsNMlQg5AoDYsTrik74M1PDYn_3CiAIWIBMZJD2Xmlmzhp8KU1i4kjJQNgdT4UopaBrgcF3uda7vkP387SNuP38_gB9LDIai5dqrJgR5-gCoSTEh74j_gftjj15_49y74k6SU3Uz4brx7"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Bread</span>
+</button>
+<!-- Item: Bananas -->
+<button class="group bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_10px_20px_rgba(12,30,38,0.03)] hover:shadow-[0px_20px_40px_rgba(12,30,38,0.06)] transition-all active:scale-95">
+<div class="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 group-hover:bg-primary-fixed transition-colors">
+<img alt="Bananas" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw9pW7igVr4n8djsp2x9OI-7yr5xmWizKCM-Ez_mcZ5xST0EfudFQ9CM9gBjx25Ic4TrZJVfEu1JFNuiKAYi7BXj5LlZ8v54AFM2uAs6ohUgagbnDUXPq88vOLIogxZsyZ1DDHBTIumheIfxCXFn3Qhp_J_pML5mTCdKtS_q4U-b6szElWLW4ma9L4O3q4z6tadEWh9YFHvk1YDPzC_KnIpQgs3oPVINy4owW-ruFh2Nczhoi22krhCDoNzRLgENzPmQaLdfi6AcAD"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Bananas</span>
+</button>
+<!-- Item: Soap (Distraction) -->
+<button class="group bg-surface-container-low/40 rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 transition-all active:scale-95">
+<div class="w-full aspect-square bg-surface-container-lowest rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 opacity-60">
+<img alt="Soap" class="w-full h-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnZsNHwX_IsO8hQms04zhHBJ7a2_8l2OK84LEGxJqGs0eezmtgGOyVOMeBjnO56_IX6E9AxbqnL29jOT2B9j2t4COLxfFj3AY5041iBPnLy2O3QPC0S6Vjl55l6ecZVDZEkv_CylZMZ5HE3P1lUAAky-sOtCGzEEU4vRelwEpAwOBf9BelQVJwu7hnVAlLJCdJUA7OQFW6MyF62KceXCEg_KaFg-pah-_giq01E_1eCG4eWBmXiomoBXfAEoumbow81d_RUqFRrMX0"/>
+</div>
+<span class="font-headline font-bold text-lg text-outline">Soap</span>
+</button>
+<!-- Item: Coffee -->
+<button class="group bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_10px_20px_rgba(12,30,38,0.03)] hover:shadow-[0px_20px_40px_rgba(12,30,38,0.06)] transition-all active:scale-95">
+<div class="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 group-hover:bg-primary-fixed transition-colors">
+<img alt="Coffee" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCnSI69xeCVMiAevZAXx--04VYrW5tZxsMYwzSeb_UGxcIXxB0vDYHdoyNrlQlEonPcHbahJ8ipu2NFJWQV0KnXVn0He8sPRjfAoKYd32gkS97VXCba4RMBRtoYHKY2CEwjWGs45vUeqc09sJV53WyNzU15J3HIlP6HTO7IccOfJq88fl4nZBIqadylvCuKQuUuth1Us5X9JFNNdxKbiQShAyVvEFA9UiNM4xDlttpWUgC6wGpBlBA7ZSLSB6SWZHZh2hoZjE0iEB-"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Coffee</span>
+</button>
+</div>
+</main>
+<!-- Hint Modal Overlay -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center px-6 pointer-events-none" id="hint-modal">
+<div class="absolute inset-0 bg-[#0c1e26]/40 backdrop-blur-md transition-opacity"></div>
+<div class="relative bg-surface-container-lowest w-full max-w-sm rounded-[3rem] p-10 shadow-2xl flex flex-col items-center pointer-events-auto">
+<h3 class="font-headline text-2xl font-bold text-primary mb-6">Your List</h3>
+<ul class="space-y-4 w-full text-center">
+<li class="text-2xl font-headline font-bold text-on-surface flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+                    Milk
+                </li>
+<li class="text-2xl font-headline font-bold text-on-surface">Apples</li>
+<li class="text-2xl font-headline font-bold text-on-surface">Bread</li>
+<li class="text-2xl font-headline font-bold text-on-surface">Bananas</li>
+</ul>
+<button class="mt-10 btn-gradient w-full py-4 rounded-full text-on-primary font-bold text-xl active:scale-95 transition-all" onclick="toggleHint()">
+                Got it!
+            </button>
+</div>
+</div>
+<!-- Bottom Actions -->
+<div class="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-surface via-surface to-transparent pointer-events-none">
+<div class="max-w-md mx-auto pointer-events-auto">
+<button class="w-full btn-gradient text-on-primary h-[72px] rounded-[2rem] font-headline font-bold text-xl shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+                Finish Shopping
+                <span class="material-symbols-outlined" data-icon="shopping_basket">shopping_basket</span>
+</button>
+</div>
+</div>
+<script>
+        function toggleHint() {
+            const modal = document.getElementById('hint-modal');
+            modal.classList.toggle('active');
+        }
+    </script>
+</body></html>

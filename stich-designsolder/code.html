@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Remind - Cognitive Health Companion</title>
+    
+    <!-- Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#def0fc",
+                        "primary-container": "#0a46c4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary": "#003194",
+                        "secondary-fixed-dim": "#dfb7ff",
+                        "primary-fixed": "#dce1ff",
+                        "outline-variant": "#c4c5d6",
+                        "surface-container-low": "#e8f6ff",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "surface-container-high": "#d9ebf7",
+                        "on-tertiary-fixed": "#001d35",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#2d0050",
+                        "on-secondary-fixed-variant": "#661aa3",
+                        "surface-bright": "#f4faff",
+                        "inverse-primary": "#b5c4ff",
+                        "outline": "#747685",
+                        "on-secondary-container": "#4e0084",
+                        "on-primary-fixed-variant": "#003bae",
+                        "surface": "#f4faff",
+                        "surface-tint": "#2454d1",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#cbdde8",
+                        "on-error": "#ffffff",
+                        "on-surface": "#0c1e26",
+                        "surface-variant": "#d3e5f1",
+                        "secondary-fixed": "#f1dbff",
+                        "secondary": "#803abd",
+                        "inverse-surface": "#22333c",
+                        "on-background": "#0c1e26",
+                        "tertiary-fixed": "#d0e4ff",
+                        "secondary-container": "#c17bff",
+                        "inverse-on-surface": "#e2f3ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#b4c3ff",
+                        "surface-container-highest": "#d3e5f1",
+                        "tertiary-fixed-dim": "#adc9eb",
+                        "tertiary": "#213d59",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-tertiary-fixed-variant": "#2d4965",
+                        "tertiary-container": "#395471",
+                        "on-tertiary-container": "#acc8ea",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#434654",
+                        "background": "#f4faff"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-cta-gradient {
+            background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 12px;
+            cursor: pointer;
+            background: #d3e5f1;
+            border-radius: 9999px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 32px;
+            width: 32px;
+            border-radius: 9999px;
+            background: #003194;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -10px;
+            box-shadow: 0px 4px 10px rgba(0, 49, 148, 0.2);
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen selection:bg-primary-fixed">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Shared Components ---
+
+        const TopAppBar = ({ title, showBack = false, showMenu = true }) => {
+            const navigate = useNavigate();
+            return (
+                <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16 bg-[#f4faff]/80 dark:bg-[#0c1e26]/80 backdrop-blur-xl z-50 shadow-sm">
+                    <div className="flex items-center gap-4">
+                        {showBack ? (
+                            <button onClick={() => navigate(-1)} className="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+                                <span className="material-symbols-outlined text-[#003194] dark:text-[#d3e5f1]">arrow_back</span>
+                            </button>
+                        ) : showMenu ? (
+                            <button className="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+                                <span className="material-symbols-outlined text-[#003194] dark:text-[#d3e5f1]">menu</span>
+                            </button>
+                        ) : null}
+                        <h1 className="font-headline font-bold text-xl tracking-tight text-[#003194] dark:text-[#d3e5f1]">{title}</h1>
+                    </div>
+                    <button className="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+                        <span className="material-symbols-outlined text-[#0c1e26]/60 dark:text-on-surface-variant" data-icon="help">help</span>
+                    </button>
+                </header>
+            );
+        };
+
+        const BottomNavBar = () => {
+            const location = useLocation();
+            const navItems = [
+                { path: '/home', icon: 'extension', label: 'Home' },
+                { path: '/progress', icon: 'insights', label: 'Progress' },
+                { path: '/profile', icon: 'account_circle', label: 'Profile' }
+            ];
+
+            return (
+                <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-8 bg-[#f4faff]/80 dark:bg-[#0c1e26]/80 backdrop-blur-xl z-50 rounded-t-3xl border-t border-[#e8f6ff]/20 dark:border-[#1a2e38] shadow-[0_-4px_20px_rgba(12,30,38,0.04)]">
+                    {navItems.map((item) => {
+                        const isActive = location.pathname === item.path;
+                        return (
+                            <Link 
+                                key={item.path}
+                                to={item.path} 
+                                className={`flex flex-col items-center justify-center rounded-2xl px-6 py-2 transition-all active:scale-90 duration-150 ${
+                                    isActive 
+                                    ? 'bg-[#d3e5f1] dark:bg-[#1a2e38] text-[#003194] dark:text-[#e8f6ff]' 
+                                    : 'text-[#0c1e26]/50 dark:text-[#f4faff]/50 hover:text-[#003194] dark:hover:text-[#e8f6ff]'
+                                }`}
+                            >
+                                <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}>{item.icon}</span>
+                                <span className="font-['Inter'] font-medium text-[12px] tracking-wide mt-1">{item.label}</span>
+                            </Link>
+                        );
+                    })}
+                </nav>
+            );
+        };
+
+        // --- Screens ---
+
+        const RegistrationScreen = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-surface font-body text-on-surface min-h-screen selection:bg-primary-fixed relative overflow-hidden">
+                    <TopAppBar title="Join Remind" showBack={false} showMenu={false} />
+                    <main className="pt-24 pb-12 px-6 max-w-xl mx-auto min-h-screen flex flex-col justify-center relative z-10">
+                        <div className="mb-12 space-y-4">
+                            <h2 className="font-headline text-4xl font-extrabold text-on-surface tracking-tight leading-tight">
+                                Let's get to <br/><span className="text-primary">know you</span> better.
+                            </h2>
+                            <p className="text-on-surface-variant text-lg leading-relaxed">
+                                This helps us personalize your cognitive exercises and daily reminders for a safer, more mindful experience.
+                            </p>
+                        </div>
+                        <form className="space-y-10" onSubmit={(e) => { e.preventDefault(); navigate('/home'); }}>
+                            <div className="group">
+                                <label className="block font-label font-semibold text-sm text-on-surface-variant mb-3 px-1" htmlFor="name">
+                                    What is your full name?
+                                </label>
+                                <div className="relative">
+                                    <input className="w-full bg-surface-variant border-none rounded-full py-5 px-8 text-xl text-on-surface placeholder:text-on-surface/30 focus:ring-4 focus:ring-primary/10 transition-all outline-none" id="name" placeholder="Enter your name" type="text"/>
+                                </div>
+                            </div>
+                            <div className="group">
+                                <label className="block font-label font-semibold text-sm text-on-surface-variant mb-3 px-1" htmlFor="age">
+                                    How many years young are you?
+                                </label>
+                                <div className="relative max-w-[200px]">
+                                    <input className="w-full bg-surface-variant border-none rounded-full py-5 px-8 text-xl text-on-surface placeholder:text-on-surface/30 focus:ring-4 focus:ring-primary/10 transition-all outline-none" id="age" placeholder="Age" type="number"/>
+                                </div>
+                            </div>
+                            <div className="group">
+                                <label className="block font-label font-semibold text-sm text-on-surface-variant mb-3 px-1" htmlFor="conditions">
+                                    Any prior health conditions we should know?
+                                </label>
+                                <div className="relative">
+                                    <textarea className="w-full bg-surface-variant border-none rounded-3xl py-5 px-8 text-lg text-on-surface placeholder:text-on-surface/30 focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none" id="conditions" placeholder="e.g. Hypertension, Diabetes, etc." rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div className="pt-8 flex flex-col items-center">
+                                <button className="w-full h-16 bg-cta-gradient text-on-primary font-headline font-bold text-xl rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] transition-all hover:brightness-110" type="submit">
+                                    Start My Journey
+                                    <span className="material-symbols-outlined text-2xl">arrow_forward</span>
+                                </button>
+                                <p className="mt-6 text-on-surface-variant text-sm font-medium">
+                                    Your data is encrypted and stored securely.
+                                </p>
+                            </div>
+                        </form>
+                    </main>
+                    <div className="fixed -bottom-24 -left-24 w-64 h-64 bg-surface-container-high rounded-full blur-[80px] -z-0 opacity-60"></div>
+                    <div className="fixed top-1/2 -right-32 w-80 h-80 bg-secondary-fixed-dim rounded-full blur-[100px] -z-0 opacity-30"></div>
+                </div>
+            );
+        };
+
+        const MemoryPhaseScreen = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-surface font-body text-on-surface min-h-screen flex flex-col">
+                    <TopAppBar title="Memory Phase" />
+                    <main className="flex-grow pt-24 pb-32 px-6 max-w-2xl mx-auto w-full">
+                        <section className="mb-12 text-center">
+                            <h2 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-3">
+                                Take a moment to remember these items.
+                            </h2>
+                            <div className="w-16 h-1.5 bg-secondary-fixed rounded-full mx-auto"></div>
+                        </section>
+                        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                            <div className="bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0px_20px_40px_rgba(12,30,38,0.04)] flex flex-col items-center transition-transform hover:scale-[1.02]">
+                                <div className="w-full aspect-square rounded-[1.5rem] bg-surface-container-low mb-6 overflow-hidden">
+                                    <img alt="A fresh red apple" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlKrNEU0gPtpx3dql7BhYjfEwtSQfE3t0kpbtz8m6DnaB-wtIvugcYUY8GnpwruqYLEn-bmC8ls-mSxk70zdMdCjRWFUJxtzJ4k5Upww4_zOiHnZshIq2-OKOkfLIiqBCr6xdGCDnlKOqYNR10-Q5lKIKYwiIpx0ZEa6wk3NGoaBDxJZLhgEpK7VV0Y-mXsNUPqYJ36fv2P_pGRwPsVjQ0Av5V0bUD7n9QU2aKdVENiU4179Tjene1zp_Ee08w1PwNnwdlYuZVI6yG"/>
+                                </div>
+                                <span className="font-headline text-2xl font-bold tracking-tight text-primary">Apple</span>
+                            </div>
+                            <div className="grid gap-8 pt-0 md:pt-12">
+                                <div className="bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0px_20px_40px_rgba(12,30,38,0.04)] flex flex-col items-center transition-transform hover:scale-[1.02]">
+                                    <div className="w-full aspect-[4/3] rounded-[1.5rem] bg-surface-container-low mb-4 overflow-hidden">
+                                        <img alt="A glass bottle of milk" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl03RIm4h0siOHuGBAAlbXTS1zclBqPXlRLAGmcj1wawqxbwpTIA6Rn6ExmOJj37MBbD72C0RH3JEuutQvRi3DJRHyL8TD8zltkYaSxXr0BPjnjtNWaH61LYOkAykQk3RGcKjJCW6dxbVeerLNhgy0pvum9JncXS2Q9I-ztwCRbKFJXTNFi4ZousiMxBVkZKKNmConvPVXWfzE5qoyxF5euuesmyorYuA6bmvgcXvqea6ovmWrkhGJ7L2onrlxTzEz__AKjs7dH6vU"/>
+                                    </div>
+                                    <span className="font-headline text-xl font-bold tracking-tight text-primary">Milk</span>
+                                </div>
+                                <div className="bg-surface-container-lowest rounded-[2rem] p-6 shadow-[0px_20px_40_rgba(12,30,38,0.04)] flex flex-col items-center transition-transform hover:scale-[1.02]">
+                                    <div className="w-full aspect-[4/3] rounded-[1.5rem] bg-surface-container-low mb-4 overflow-hidden">
+                                        <img alt="A loaf of crusty bread" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlob0V4uO6jidm2VRfJJ8xjw1cXB9IsE4u4TSi_a7aLOGVwbkBCfnRRL140NOJhTqm_7DL65FvZVXbkWDqT-eb4naB_MwZvs4bGd89toYdio8EYEtmMjulnOSiA83vEph1C2HkSTLbRzvUNm47yPqZzYUKo_kBEjpkqWs25owpe221KbEnGcb2mHpwGt7fk5DULZu2C3pleps2mfRCfHDn4cQL2XCoF6acZ9J-kMxCwG0CSrv9ZkX1K0Vx-Hr_DWzxDJ915RYFSlPl"/>
+                                    </div>
+                                    <span className="font-headline text-xl font-bold tracking-tight text-primary">Bread</span>
+                                </div>
+                            </div>
+                            <div className="md:col-span-2 mt-4">
+                                <div className="bg-surface-container-high rounded-[2.5rem] p-6 sm:p-8 flex items-center justify-between shadow-[0px_20px_40px_rgba(12,30,38,0.04)] transition-transform hover:scale-[1.01]">
+                                    <div className="flex items-center gap-6 sm:gap-8">
+                                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-surface-container-lowest p-1 shadow-sm overflow-hidden flex-shrink-0">
+                                            <img alt="Bunches of yellow bananas" className="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPs9xXohElovCqqytf-VC4Lhy8kkrFJ9dS5KaI19AVRNu1W_IMFuATHyLrTd4h5Q72ZDxrGMrNB9icnzmJtJ49KXBsiM-eUTPKiYg7lxfYVMwqd1mcEhM-6TWMLv31wvMR7r2JV0GWGybvMoDRAX1-05ZZJ8oA4EB_pOYd5dgeQdQoSkxBKKHeWmvP-JY2viXD6JmiKwrWL00cRQ2BY9501R6ywAHRXk9ObyLkrfYLt8NXCBQPzL-r27gh1oiBjW0gcGXtElwRN7SG"/>
+                                        </div>
+                                        <div>
+                                            <span className="font-headline text-2xl font-bold tracking-tight text-primary block">Bananas</span>
+                                            <p className="text-on-surface-variant font-medium">A healthy snack</p>
+                                        </div>
+                                    </div>
+                                    <div className="hidden sm:block">
+                                        <span className="material-symbols-outlined text-4xl text-primary/20" style={{ fontVariationSettings: "'FILL' 1" }}>shopping_basket</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <div className="fixed bottom-0 left-0 w-full bg-surface-container-low/95 backdrop-blur-xl px-6 pt-6 pb-10 flex justify-center items-center z-40">
+                        <button onClick={() => navigate('/shopping')} className="primary-gradient text-on-primary w-full max-w-md h-16 rounded-[1.5rem] font-headline font-bold text-lg shadow-lg active:scale-95 transition-all duration-200 flex items-center justify-center gap-3 group">
+                            <span>I'm Ready</span>
+                            <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const ShoppingScreen = () => {
+            const navigate = useNavigate();
+            const [hintActive, setHintActive] = useState(false);
+            const [foundCount, setFoundCount] = useState(1);
+
+            return (
+                <div className="bg-surface font-body text-on-surface min-h-screen">
+                    <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16 bg-[#f4faff]/80 backdrop-blur-xl z-50 shadow-sm">
+                        <div className="flex items-center gap-4">
+                            <button className="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+                                <span className="material-symbols-outlined text-[#003194]">menu</span>
+                            </button>
+                            <h1 className="font-headline font-bold text-xl tracking-tight text-[#003194]">Pick Your Items</h1>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => setHintActive(true)} className="flex items-center gap-1 bg-surface-container-high px-4 py-1.5 rounded-full text-primary font-bold active:scale-95 transition-all shadow-sm">
+                                <span className="material-symbols-outlined text-xl">lightbulb</span>
+                                <span className="text-sm">Hint</span>
+                            </button>
+                            <button className="p-2 rounded-full hover:bg-[#d3e5f1]/50 transition-colors active:scale-95 duration-200 ease-out">
+                                <span className="material-symbols-outlined text-[#003194]">help</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <main className="pt-24 pb-40 px-6 max-w-4xl mx-auto">
+                        <section className="mb-12 flex flex-col md:flex-row justify-between items-baseline gap-4">
+                            <div className="max-w-md">
+                                <h2 className="font-headline text-4xl font-extrabold tracking-tight text-primary mb-2">Find your groceries.</h2>
+                                <p className="text-on-surface-variant text-lg leading-relaxed">Refer to your list and select the items you need to complete today's task.</p>
+                            </div>
+                            <div className="bg-surface-container-high px-8 py-6 rounded-[2rem] flex flex-col items-center justify-center min-w-[160px] shadow-sm">
+                                <span className="text-label-md font-bold text-primary uppercase tracking-widest mb-1">Items Found</span>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-5xl font-headline font-black text-primary">{foundCount}</span>
+                                    <span className="text-2xl font-headline font-bold text-outline">/4</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                            <div className="group relative bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_20px_40px_rgba(12,30,38,0.06)] ring-4 ring-primary ring-offset-4 ring-offset-surface transition-all">
+                                <div className="absolute top-4 right-4 bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center z-10">
+                                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
+                                </div>
+                                <div className="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2">
+                                    <img alt="Milk" className="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIEjqfCeCCYvns2fj6pPkoO3wjBZFAyL0dKt_Nc16ERzGa9Hy9cH6-NZ47iVr1Zg4Z601P8SwEGOfFPNx05ADba8KkNIdqt15sH9GljBmog2pWjhbqIJF6W4QNNdpbIoyPSINI67ozHXa-owpFAlB157vVLnPDL0Uj091fxrplwj4Ef8HTEthPmRDr6nBEYHKmBogN5VN01QGxoW5WDPKwNoIBlwqYgh1tdB-cikBeHspyB7s0hrokAK_h7Xlfy_WdQjsWJ3kXTlZC"/>
+                                </div>
+                                <span className="font-headline font-bold text-lg text-on-surface">Milk</span>
+                            </div>
+                            
+                            {[
+                                { name: 'Apples', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAaQfUdsDdvUA0NiWSOaCkyFF6GBMl_RlV0-dO-4dlS55P0nOBv2W9BtRZQL2ae-2UZ_bvxfrxjAbkuXJ9ToFXXqxUVVpn9eAOysG5EWQkOeTM-XxuOQ63SPtkf-xe4v9BCtUzKyfoIsiDtFAymEEUpDi0zzqjzleBMMvVSTtbe5kV_KdVPw-7_aeY9gsqopuID4Sp5zc72O_eLYGSK0NshaeQX9Vt051oF-4wz9TEiAW8plxPF6xPyRWrCYG4LjF_IqLDriSh9D3rx' },
+                                { name: 'Bread', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAaKyZCpj3rQN1nTtFQdUWbnn-ggm8DydCT-3ihjfQX0XwGl6bzDnNZLyq5ksjcHoPJ9a3N94ACks7qDcnbZ4u4mmLtGW0Ew4jPYJV35Iau4ArO9Em2xFciUDMVo4RZ_wWEsNMlQg5AoDYsTrik74M1PDYn_3CiAIWIBMZJD2Xmlmzhp8KU1i4kjJQNgdT4UopaBrgcF3uda7vkP387SNuP38_gB9LDIai5dqrJgR5-gCoSTEh74j_gftjj15_49y74k6SU3Uz4brx7' },
+                                { name: 'Bananas', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAw9pW7igVr4n8djsp2x9OI-7yr5xmWizKCM-Ez_mcZ5xST0EfudFQ9CM9gBjx25Ic4TrZJVfEu1JFNuiKAYi7BXj5LlZ8v54AFM2uAs6ohUgagbnDUXPq88vOLIogxZsyZ1DDHBTIumheIfxCXFn3Qhp_J_pML5mTCdKtS_q4U-b6szElWLW4ma9L4O3q4z6tadEWh9YFHvk1YDPzC_KnIpQgs3oPVINy4owW-ruFh2Nczhoi22krhCDoNzRLgENzPmQaLdfi6AcAD' }
+                            ].map(item => (
+                                <button key={item.name} onClick={() => setFoundCount(c => Math.min(4, c+1))} className="group bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_10px_20px_rgba(12,30,38,0.03)] hover:shadow-[0px_20px_40px_rgba(12,30,38,0.06)] transition-all active:scale-95">
+                                    <div className="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 group-hover:bg-primary-fixed transition-colors">
+                                        <img alt={item.name} className="w-full h-full object-cover" src={item.img}/>
+                                    </div>
+                                    <span className="font-headline font-bold text-lg text-on-surface">{item.name}</span>
+                                </button>
+                            ))}
+
+                            <button className="group bg-surface-container-low/40 rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 transition-all active:scale-95">
+                                <div className="w-full aspect-square bg-surface-container-lowest rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 opacity-60">
+                                    <img alt="Soap" className="w-full h-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnZsNHwX_IsO8hQms04zhHBJ7a2_8l2OK84LEGxJqGs0eezmtgGOyVOMeBjnO56_IX6E9AxbqnL29jOT2B9j2t4COLxfFj3AY5041iBPnLy2O3QPC0S6Vjl55l6ecZVDZEkv_CylZMZ5HE3P1lUAAky-sOtCGzEEU4vRelwEpAwOBf9BelQVJwu7hnVAlLJCdJUA7OQFW6MyF62KceXCEg_KaFg-pah-_giq01E_1eCG4eWBmXiomoBXfAEoumbow81d_RUqFRrMX0"/>
+                                </div>
+                                <span className="font-headline font-bold text-lg text-outline">Soap</span>
+                            </button>
+                            <button className="group bg-surface-container-lowest rounded-[2rem] p-4 flex flex-col items-center justify-center gap-4 shadow-[0px_10px_20px_rgba(12,30,38,0.03)] hover:shadow-[0px_20px_40px_rgba(12,30,38,0.06)] transition-all active:scale-95">
+                                <div className="w-full aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden flex items-center justify-center mb-2 group-hover:bg-primary-fixed transition-colors">
+                                    <img alt="Coffee" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCnSI69xeCVMiAevZAXx--04VYrW5tZxsMYwzSeb_UGxcIXxB0vDYHdoyNrlQlEonPcHbahJ8ipu2NFJWQV0KnXVn0He8sPRjfAoKYd32gkS97VXCba4RMBRtoYHKY2CEwjWGs45vUeqc09sJV53WyNzU15J3HIlP6HTO7IccOfJq88fl4nZBIqadylvCuKQuUuth1Us5X9JFNNdxKbiQShAyVvEFA9UiNM4xDlttpWUgC6wGpBlBA7ZSLSB6SWZHZh2hoZjE0iEB-"/>
+                                </div>
+                                <span className="font-headline font-bold text-lg text-on-surface">Coffee</span>
+                            </button>
+                        </div>
+                    </main>
+
+                    {hintActive && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+                            <div className="absolute inset-0 bg-[#0c1e26]/40 backdrop-blur-md" onClick={() => setHintActive(false)}></div>
+                            <div className="relative bg-surface-container-lowest w-full max-w-sm rounded-[3rem] p-10 shadow-2xl flex flex-col items-center">
+                                <h3 className="font-headline text-2xl font-bold text-primary mb-6">Your List</h3>
+                                <ul className="space-y-4 w-full text-center">
+                                    <li className="text-2xl font-headline font-bold text-on-surface flex items-center justify-center gap-3">
+                                        <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span> Milk
+                                    </li>
+                                    <li className="text-2xl font-headline font-bold text-on-surface">Apples</li>
+                                    <li className="text-2xl font-headline font-bold text-on-surface">Bread</li>
+                                    <li className="text-2xl font-headline font-bold text-on-surface">Bananas</li>
+                                </ul>
+                                <button className="mt-10 btn-gradient w-full py-4 rounded-full text-on-primary font-bold text-xl active:scale-95 transition-all" onClick={() => setHintActive(false)}>
+                                    Got it!
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-surface via-surface to-transparent pointer-events-none">
+                        <div className="max-w-md mx-auto pointer-events-auto">
+                            <button onClick={() => navigate('/progress')} className="w-full btn-gradient text-on-primary h-[72px] rounded-[2rem] font-headline font-bold text-xl shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+                                Finish Shopping
+                                <span className="material-symbols-outlined">shopping_basket</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const ProgressScreen = () => {
+            return (
+                <div className="bg-background-light text-on-surface font-body min-h-screen pb-32">
+                    <TopAppBar title="My Progress" />
+                    <main className="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+                        <section className="space-y-4">
+                            <h2 className="font-display font-extrabold text-4xl text-slate-900 leading-tight tracking-tight">You're doing great!</h2>
+                            <p className="text-on-surface-variant text-lg leading-relaxed max-w-lg font-medium">Your memory is getting sharper every single day. Keep up this momentum!</p>
+                        </section>
+                        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-primary text-white p-8 rounded-2xl flex items-center justify-between shadow-xl shadow-primary/10">
+                                <div className="space-y-1">
+                                    <p className="text-xs font-bold uppercase tracking-widest text-white/70">Current Streak</p>
+                                    <p className="text-5xl font-display font-extrabold">12 Days</p>
+                                </div>
+                                <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-3xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
+                                </div>
+                            </div>
+                            <div className="bg-[#4F46E5] text-white p-8 rounded-2xl flex items-center justify-between shadow-xl shadow-secondary/10">
+                                <div className="space-y-1">
+                                    <p className="text-xs font-bold uppercase tracking-widest text-white/70">Total Points</p>
+                                    <p className="text-5xl font-display font-extrabold">2,450</p>
+                                </div>
+                                <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-3xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>military_tech</span>
+                                </div>
+                            </div>
+                        </section>
+                        <section className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+                                <div>
+                                    <h3 className="font-headline font-bold text-2xl text-on-surface">Average Time</h3>
+                                    <p className="text-on-surface-variant text-lg">Your daily session duration</p>
+                                </div>
+                                <div className="bg-primary/5 border border-primary/10 px-4 py-2 rounded-full">
+                                    <span className="text-lg font-display font-bold text-primary">14 min / day</span>
+                                </div>
+                            </div>
+                            <div className="flex items-end justify-between h-56 gap-2 sm:gap-4 px-2">
+                                {[
+                                    { day: 'Mon', h: '40%' },
+                                    { day: 'Tue', h: '60%' },
+                                    { day: 'Wed', h: '85%', active: true, val: '22m' },
+                                    { day: 'Thu', h: '55%' },
+                                    { day: 'Fri', h: '70%' },
+                                    { day: 'Sat', h: '30%' },
+                                    { day: 'Sun', h: '20%' }
+                                ].map(bar => (
+                                    <div key={bar.day} className="flex flex-col items-center gap-4 w-full">
+                                        <div 
+                                            className={`w-full rounded-t-2xl relative ${bar.active ? 'bg-primary' : 'bg-surface-container'}`} 
+                                            style={{ height: bar.h }}
+                                        >
+                                            {bar.active && (
+                                                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold py-1 px-2 rounded">{bar.val}</div>
+                                            )}
+                                        </div>
+                                        <span className={`text-sm font-bold ${bar.active ? 'text-primary' : 'text-on-surface-variant'}`}>{bar.day}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        <section className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                            <div className="flex flex-col md:flex-row items-center gap-8">
+                                <div className="flex-1 space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2.5 bg-red-50 rounded-lg">
+                                            <span className="material-symbols-outlined text-red-600 text-2xl">error</span>
+                                        </div>
+                                        <h3 className="font-display font-bold text-xl text-slate-900">Mistakes</h3>
+                                    </div>
+                                    <div className="flex items-baseline gap-4">
+                                        <span className="text-6xl font-display font-extrabold text-slate-900">08</span>
+                                        <div className="flex items-center gap-1 text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full text-xs font-bold">
+                                            <span className="material-symbols-outlined text-sm">trending_down</span> 12% Less
+                                        </div>
+                                    </div>
+                                    <p className="text-on-surface-variant text-lg">Great job! You made fewer mistakes this week compared to last week.</p>
+                                </div>
+                                <div className="w-full md:w-64 h-3 flex bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="w-[88%] bg-primary h-full rounded-full"></div>
+                                </div>
+                            </div>
+                        </section>
+                        <section className="space-y-6">
+                            <div className="flex items-center justify-between px-2">
+                                <h3 className="font-headline font-bold text-2xl text-on-surface">Achievements</h3>
+                                <button className="text-primary font-bold text-lg flex items-center gap-1">View All <span className="material-symbols-outlined">chevron_right</span></button>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <AchievementCard icon="auto_awesome" title="Perfect Recall" desc="5 sessions without a single mistake." />
+                                <AchievementCard icon="schedule" title="Early Bird" desc="3 morning sessions before 9:00 AM." />
+                                <AchievementCard icon="emoji_events" title="Memory Master" desc="Successfully rehearsed over 500 items." full />
+                            </div>
+                        </section>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const AchievementCard = ({ icon, title, desc, full = false }) => (
+            <div className={`bg-surface-container-lowest border border-surface-container-high p-6 rounded-3xl flex items-center gap-5 transition-transform active:scale-95 ${full ? 'sm:col-span-2' : ''}`}>
+                <div className="w-16 h-16 bg-surface-container rounded-2xl flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[#803abd] text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
+                </div>
+                <div className="space-y-1">
+                    <h4 className="font-bold text-xl text-on-surface leading-tight">{title}</h4>
+                    <p className="text-on-surface-variant leading-snug">{desc}</p>
+                </div>
+            </div>
+        );
+
+        const GameSettingsScreen = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-surface font-body text-on-surface min-h-screen pb-32">
+                    <TopAppBar title="Hello, Sarah" />
+                    <main className="pt-24 px-6 max-w-2xl mx-auto space-y-12">
+                        <section className="space-y-4">
+                            <h2 className="font-headline text-lg text-on-surface-variant px-1">Your last journey</h2>
+                            <div className="bg-surface-container-low p-6 rounded-3xl flex items-center justify-between relative overflow-hidden">
+                                <div className="flex flex-col gap-1 z-10">
+                                    <p className="text-sm font-label text-outline uppercase tracking-widest">Last Session</p>
+                                    <div className="flex gap-8 mt-2">
+                                        <div className="flex flex-col">
+                                            <span className="text-2xl font-headline font-extrabold text-primary">12:45</span>
+                                            <span className="text-xs text-on-surface-variant">Time taken</span>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-2xl font-headline font-extrabold text-secondary">2</span>
+                                            <span className="text-xs text-on-surface-variant">Mistakes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="h-20 w-20 bg-secondary-fixed rounded-full flex items-center justify-center z-10">
+                                    <span className="material-symbols-outlined text-on-secondary-fixed text-4xl">insights</span>
+                                </div>
+                                <div className="absolute -right-4 -top-4 w-32 h-32 bg-primary-fixed-dim/20 rounded-full blur-3xl"></div>
+                            </div>
+                        </section>
+
+                        <section className="space-y-8 py-4">
+                            <div className="text-center space-y-2">
+                                <h2 className="font-headline text-3xl text-on-surface tracking-tight">Set your pace</h2>
+                                <p className="text-on-surface-variant">Choose a challenge level that feels right today.</p>
+                            </div>
+                            <div className="bg-surface-container-lowest p-8 rounded-[2.5rem] shadow-[0px_20px_40px_rgba(12,30,38,0.06)] space-y-10">
+                                <div className="relative px-2">
+                                    <input className="w-full h-3" max="3" min="1" step="1" type="range" defaultValue="2"/>
+                                    <div className="flex justify-between mt-6 px-1">
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="font-headline font-bold text-sm text-outline">Easy</span>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+                                        </div>
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="font-headline font-bold text-sm text-primary">Medium</span>
+                                            <div className="w-2 h-2 rounded-full bg-primary"></div>
+                                        </div>
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="font-headline font-bold text-sm text-outline">Hard</span>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="bg-surface-container p-6 rounded-2xl flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary mt-1">info</span>
+                                    <p className="text-sm leading-relaxed text-on-tertiary-fixed-variant">
+                                        <strong>Medium Level</strong> is perfect for staying sharp. It includes 12 items to remember with a gentle time limit.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="flex flex-col items-center pt-4">
+                            <button onClick={() => navigate('/memory')} className="w-full max-w-sm h-16 bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold text-lg rounded-xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-3">
+                                <span>Start Shopping</span>
+                                <span className="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                            <p className="mt-6 text-on-surface-variant/70 text-sm italic font-medium">"Small steps every day lead to big discoveries."</p>
+                        </section>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const ProfilePlaceholderScreen = () => (
+            <div className="bg-surface font-body text-on-surface min-h-screen pb-32 flex flex-col items-center justify-center px-6 text-center">
+                <TopAppBar title="My Profile" />
+                <div className="w-24 h-24 bg-primary-fixed rounded-full flex items-center justify-center mb-6">
+                    <span className="material-symbols-outlined text-primary text-5xl">person</span>
+                </div>
+                <h2 className="text-2xl font-headline font-bold mb-2">Sarah Jenkins</h2>
+                <p className="text-on-surface-variant mb-8">Member since February 2024</p>
+                <div className="w-full max-w-sm bg-white rounded-3xl p-6 space-y-4 shadow-sm border border-slate-100">
+                    <div className="flex justify-between items-center py-2 border-b border-slate-50">
+                        <span className="font-semibold">Email</span>
+                        <span className="text-on-surface-variant">sarah.j@example.com</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-slate-50">
+                        <span className="font-semibold">Notification Preference</span>
+                        <span className="text-primary">Daily at 9 AM</span>
+                    </div>
+                </div>
+                <BottomNavBar />
+            </div>
+        );
+
+        // --- Main App & Router ---
+
+        const App = () => {
+            return (
+                <MemoryRouter initialEntries={['/']}>
+                    <Routes>
+                        <Route path="/" element={<RegistrationScreen />} />
+                        <Route path="/home" element={<GameSettingsScreen />} />
+                        <Route path="/memory" element={<MemoryPhaseScreen />} />
+                        <Route path="/shopping" element={<ShoppingScreen />} />
+                        <Route path="/progress" element={<ProgressScreen />} />
+                        <Route path="/profile" element={<ProfilePlaceholderScreen />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

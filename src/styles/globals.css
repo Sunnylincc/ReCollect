@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Stitch / Remind color palette (MD3-style) */
+    --background: 207 100% 97%;       /* #f4faff */
+    --foreground: 198 52% 10%;        /* #0c1e26 */
+    --card: 0 0% 100%;
+    --card-foreground: 198 52% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 198 52% 10%;
+    --primary: 220 100% 29%;          /* #003194 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 272 53% 48%;         /* #803abd */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 207 50% 94%;
+    --muted-foreground: 232 11% 30%;  /* #434654 */
+    --accent: 207 60% 92%;
+    --accent-foreground: 220 100% 29%;
+    --destructive: 356 100% 36%;      /* #ba1a1a */
+    --destructive-foreground: 0 0% 100%;
+    --border: 204 38% 88%;            /* #d3e5f1 */
+    --input: 204 38% 88%;
+    --ring: 220 100% 29%;
+    --radius: 1rem;
+    --chart-1: 220 100% 40%;
+    --chart-2: 272 53% 48%;
+    --chart-3: 198 52% 20%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 198 52% 10%;
+    --foreground: 207 100% 97%;
+    --card: 200 40% 14%;
+    --card-foreground: 207 100% 97%;
+    --popover: 200 40% 14%;
+    --popover-foreground: 207 100% 97%;
+    --primary: 220 80% 65%;
+    --primary-foreground: 198 52% 10%;
+    --secondary: 272 40% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 200 40% 18%;
+    --muted-foreground: 207 30% 65%;
+    --accent: 200 40% 18%;
+    --accent-foreground: 207 100% 97%;
+    --destructive: 356 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 200 30% 22%;
+    --input: 200 30% 22%;
+    --ring: 220 80% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background: #cbd5e1; /* slate-300 — visible outside the 430px phone frame on desktop */
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  label {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  button {
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  @media (min-width: 768px) {
+    h1 { font-size: 2.75rem; }
+    h2 { font-size: 2.25rem; }
+    h3 { font-size: 1.75rem; }
+    p  { font-size: 1.125rem; }
+    button { font-size: 1.125rem; }
+  }
+}
+
+/* Utility classes for Remind design system */
+@layer utilities {
+  .font-headline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #003194 0%, #0a46c4 100%);
+    color: white;
+    border-radius: 9999px;
+    height: 4rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    box-shadow: 0 8px 24px rgba(0, 49, 148, 0.2);
+    transition: all 0.15s ease;
+    width: 100%;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.6;
+  }
+
+  .surface-card {
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid #d3e5f1;
+    box-shadow: 0 2px 12px rgba(12, 30, 38, 0.04);
+  }
+
+  .input-pill {
+    background: #d3e5f1;
+    border: none;
+    border-radius: 9999px;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    color: #0c1e26;
+    width: 100%;
+    outline: none;
+    transition: all 0.15s ease;
+  }
+
+  .input-pill:focus {
+    box-shadow: 0 0 0 4px rgba(0, 49, 148, 0.12);
+  }
+
+  .input-pill::placeholder {
+    color: rgba(12, 30, 38, 0.35);
+  }
+}

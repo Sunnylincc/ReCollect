@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Remind - My Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#0A46C4",
+          "secondary": "#4F46E5",
+          "background-light": "#f5f6f8",
+          "background-dark": "#101622",
+          "surface": "#ffffff",
+          "surface-variant": "#f1f5f9",
+          "on-surface": "#1e293b",
+          "on-surface-variant": "#64748b"
+        },
+        fontFamily: {
+          "display": ["Plus Jakarta Sans"],
+          "body": ["Inter"]
+        },
+        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+      },
+    },
+  }</script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #f4faff;
+      }
+      .stat-card-shadow {
+        box-shadow: 0 8px 32px -4px rgba(0, 45, 132, 0.08);
+      }
+    </style>
+</head>
+<body class="bg-background-light text-on-surface font-body min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16 bg-white/80 backdrop-blur-md z-50 border-b border-slate-200">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full active:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline font-bold text-xl tracking-tight text-primary">My Progress</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full active:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="help">help</span>
+</button>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+<!-- Hero Header -->
+<section class="space-y-4"><h2 class="font-display font-extrabold text-4xl text-slate-900 leading-tight tracking-tight">You're doing great!</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-lg font-medium">Your memory is getting sharper every single day. Keep up this momentum!</p></section>
+<!-- Key Metrics Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Streak Card -->
+<div class="bg-primary text-white p-8 rounded-2xl flex items-center justify-between shadow-xl shadow-primary/10">
+<div class="space-y-1">
+<p class="text-xs font-bold uppercase tracking-widest text-white/70">Current Streak</p>
+<p class="text-5xl font-display font-extrabold">12 Days</p>
+</div>
+<div class="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-white" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+<!-- Lifetime Points Card -->
+<div class="bg-secondary text-white p-8 rounded-2xl flex items-center justify-between shadow-xl shadow-secondary/10">
+<div class="space-y-1">
+<p class="text-xs font-bold uppercase tracking-widest text-white/70">Total Points</p>
+<p class="text-5xl font-display font-extrabold">2,450</p>
+</div>
+<div class="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-white" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+</div>
+</section>
+<!-- Activity Analysis -->
+<section class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+<div>
+<h3 class="font-headline font-bold text-2xl text-on-surface">Average Time</h3>
+<p class="text-on-surface-variant text-lg">Your daily session duration</p>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-full border border-surface-container bg-primary/5 border-primary/10"><span class="text-lg font-display font-bold text-primary">14 min / day</span></div>
+</div>
+<!-- Refined Bar Chart -->
+<div class="flex items-end justify-between h-56 gap-2 sm:gap-4 px-2">
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-surface-container rounded-t-2xl h-[40%]"></div>
+<span class="text-sm font-bold text-on-surface-variant">Mon</span>
+</div>
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-surface-container rounded-t-2xl h-[60%]"></div>
+<span class="text-sm font-bold text-on-surface-variant">Tue</span>
+</div>
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-primary-container rounded-t-2xl h-[85%] relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold py-1 px-2 rounded">22m</div>
+</div>
+<span class="text-sm font-bold text-primary">Wed</span>
+</div>
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-surface-container rounded-t-2xl h-[55%]"></div>
+<span class="text-sm font-bold text-on-surface-variant">Thu</span>
+</div>
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-surface-container rounded-t-2xl h-[70%]"></div>
+<span class="text-sm font-bold text-on-surface-variant">Fri</span>
+</div>
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-surface-container rounded-t-2xl h-[30%]"></div>
+<span class="text-sm font-bold text-on-surface-variant">Sat</span>
+</div>
+<div class="flex flex-col items-center gap-4 w-full">
+<div class="w-full bg-surface-container rounded-t-2xl h-[20%]"></div>
+<span class="text-sm font-bold text-on-surface-variant">Sun</span>
+</div>
+</div>
+</section>
+<!-- Weekly Improvement -->
+<section class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+<div class="flex flex-col md:flex-row items-center gap-8">
+<div class="flex-1 space-y-4">
+<div class="flex items-center gap-3">
+<div class="p-2.5 bg-red-50 rounded-lg">
+<span class="material-symbols-outlined text-red-600 text-2xl">error</span>
+</div>
+<h3 class="font-display font-bold text-xl text-slate-900">Mistakes</h3>
+</div>
+<div class="flex items-baseline gap-4">
+<span class="text-6xl font-display font-extrabold text-slate-900">08</span>
+<div class="flex items-center gap-1 text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                        12% Less
+                    </div>
+</div>
+<p class="text-on-surface-variant text-lg">Great job! You made fewer mistakes this week compared to last week.</p>
+</div>
+<div class="w-full md:w-64 h-3 flex bg-slate-100 rounded-full overflow-hidden">
+<div class="w-[88%] bg-primary h-full rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Achievements Section -->
+<section class="space-y-6">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-headline font-bold text-2xl text-on-surface">Achievements</h3>
+<button class="text-primary font-bold text-lg flex items-center gap-1">View All <span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest border border-surface-container-high p-6 rounded-3xl flex items-center gap-5 transition-transform active:scale-95">
+<div class="w-16 h-16 bg-surface-container rounded-2xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-xl text-on-surface leading-tight">Perfect Recall</h4>
+<p class="text-on-surface-variant leading-snug">5 sessions without a single mistake.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container-high p-6 rounded-3xl flex items-center gap-5 transition-transform active:scale-95">
+<div class="w-16 h-16 bg-surface-container rounded-2xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="schedule" style="font-variation-settings: 'FILL' 1;">schedule</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-xl text-on-surface leading-tight">Early Bird</h4>
+<p class="text-on-surface-variant leading-snug">3 morning sessions before 9:00 AM.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container-high p-6 rounded-3xl flex items-center gap-5 transition-transform active:scale-95 sm:col-span-2">
+<div class="w-16 h-16 bg-surface-container rounded-2xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-xl text-on-surface leading-tight">Memory Master</h4>
+<p class="text-on-surface-variant leading-snug">You have successfully rehearsed over 500 items this month.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-4 pb-8 bg-white border-t border-slate-200 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]"><a class="flex flex-col items-center justify-center text-slate-400 px-6 py-2 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined text-2xl">extension</span>
+<span class="font-body font-bold text-[10px] mt-1 uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary px-6 py-2 transition-all relative" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-body font-bold text-[10px] mt-1 uppercase tracking-wider">Progress</span>
+<div class="absolute -bottom-1 w-12 h-1 bg-primary rounded-full"></div>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-6 py-2 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+<span class="font-body font-bold text-[10px] mt-1 uppercase tracking-wider">Profile</span>
+</a></nav>
+</body></html>

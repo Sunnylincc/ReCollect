@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(sed -i '' 's/fixed top-0 left-0 w-full flex items-center justify-between px-6 h-16/sticky top-0 w-full flex items-center justify-between px-6 h-16/g' src/components/HomePage.tsx src/components/ListViewPage.tsx src/components/StoreIntroPage.tsx src/components/ResultsPage.tsx src/components/StatsPage.tsx)",
+      "Bash(__NEW_LINE_a2d48220b8af1cf1__ sed:*)",
+      "Bash(__NEW_LINE_a2d48220b8af1cf1__ echo:*)",
+      "Bash(grep:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vite:*)",
+      "Bash(curl -sL \"https://images.unsplash.com/photo-1518569656558-1f25e69d2fd4?w=300&q=80\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/eggs.jpg)",
+      "Bash(curl -sL \"https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=300&q=80\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/oranges.jpg)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" \"https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=300&q=80\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/eggs.jpg)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" \"https://images.unsplash.com/photo-1547514701-42782101795e?w=300&q=80\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/oranges.jpg)",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36\" -H \"Referer: https://unsplash.com/\" \"https://images.unsplash.com/photo-1597528380832-b05db5d0c571?w=300&q=80\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/jam.jpg)",
+      "Bash(__NEW_LINE_569bdb795c4f3403__ curl:*)",
+      "Bash(__NEW_LINE_569bdb795c4f3403__ ls:*)",
+      "Bash(curl -sL \"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Strawberry_jam_on_a_spoon.jpg/300px-Strawberry_jam_on_a_spoon.jpg\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/jam.jpg)",
+      "Bash(__NEW_LINE_2c8896bb114bccb3__ curl:*)",
+      "Bash(__NEW_LINE_2c8896bb114bccb3__ ls:*)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" \"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80\" -o /Users/ethansun/Desktop/ThirdADIteration-main/src/assets/food/yogurt.jpg)",
+      "Bash(__NEW_LINE_5e0e7eddc60f61c9__ curl:*)",
+      "Bash(__NEW_LINE_5e0e7eddc60f61c9__ file:*)"
+    ]
+  }
+}
