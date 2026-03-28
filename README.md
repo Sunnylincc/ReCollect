@@ -1,11 +1,1 @@
-
-  # Senior-Friendly Memory Game
-
-  This is a code bundle for Senior-Friendly Memory Game. The original project is available at https://www.figma.com/design/L3KaMBRzLIqhw7RQxi9ZI0/Senior-Friendly-Memory-Game.
-
-  ## Running the code
-
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
-  
+ReCollect is a senior-friendly app that helps people with dementia exercise their memory through a familiar daily activity in the form of grocery shopping. Players memorize a shopping list, then navigate a virtual store to select the correct items.
